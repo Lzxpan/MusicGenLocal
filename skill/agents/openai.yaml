@@ -1,0 +1,4 @@
+interface:
+  display_name: "Local MusicGen"
+  short_description: "Generate local loopable game music with MusicGen"
+  default_prompt: "Use $musicgen-local to generate a loopable game background track locally with MusicGen."

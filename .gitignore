@@ -1,0 +1,18 @@
+.DS_Store
+Thumbs.db
+
+# Generated music output
+music/*.wav
+music/*.prompt.txt
+!music/.gitkeep
+
+# Python virtual environment
+skill/.venv/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Local editor artifacts
+.vscode/
+.idea/
