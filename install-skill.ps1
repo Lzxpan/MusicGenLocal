@@ -1,29 +1,43 @@
-param(
+﻿param(
     [switch]$Copy
 )
 
 $repoRoot = $PSScriptRoot
-$sourceSkillPath = Join-Path $repoRoot "skill"
 $targetSkillsRoot = Join-Path $env:USERPROFILE ".codex\skills"
-$targetSkillPath = Join-Path $targetSkillsRoot "musicgen-local"
-
-if (-not (Test-Path $sourceSkillPath)) {
-    throw "Skill source folder was not found: $sourceSkillPath"
-}
 
 New-Item -ItemType Directory -Force -Path $targetSkillsRoot | Out-Null
 
-if (Test-Path $targetSkillPath) {
-    throw "Target skill path already exists: $targetSkillPath"
-}
+function Install-SkillFolder {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$SourceFolder,
+        [Parameter(Mandatory = $true)]
+        [string]$SkillName
+    )
 
-if ($Copy) {
-    Copy-Item $sourceSkillPath $targetSkillPath -Recurse -Force
-    Write-Output "Skill copied to $targetSkillPath"
-}
-else {
+    $sourceSkillPath = Join-Path $repoRoot $SourceFolder
+    $targetSkillPath = Join-Path $targetSkillsRoot $SkillName
+
+    if (-not (Test-Path $sourceSkillPath)) {
+        throw "找不到 skill 來源資料夾：$sourceSkillPath"
+    }
+
+    if (Test-Path $targetSkillPath) {
+        Write-Output "Skill 已存在，略過：$targetSkillPath"
+        return
+    }
+
+    if ($Copy) {
+        Copy-Item $sourceSkillPath $targetSkillPath -Recurse -Force
+        Write-Output "已複製 skill 到 $targetSkillPath"
+        return
+    }
+
     New-Item -ItemType Junction -Path $targetSkillPath -Target $sourceSkillPath | Out-Null
-    Write-Output "Skill junction created: $targetSkillPath -> $sourceSkillPath"
+    Write-Output "已建立 skill junction：$targetSkillPath -> $sourceSkillPath"
 }
 
-Write-Output "Restart Codex to pick up the new skill."
+Install-SkillFolder -SourceFolder "skill" -SkillName "musicgen-local"
+Install-SkillFolder -SourceFolder "skill-ui" -SkillName "musicgen-local-ui"
+
+Write-Output "請重新啟動 Codex，讓新 skill 生效。"

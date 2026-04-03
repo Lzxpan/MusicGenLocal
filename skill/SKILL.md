@@ -1,53 +1,61 @@
 ---
 name: musicgen-local
-description: Generate local background music and loopable game BGM with Meta MusicGen on the user's machine. Use when Codex needs an offline or no-API music generation workflow, especially for game soundtrack prototyping, seamless loop-style prompts, local setup of Python dependencies, or repeated text-to-music generation after cloud APIs are unavailable, paid, or quota-limited.
+description: 在使用者的 Windows 機器上以 Meta MusicGen 本機生成遊戲配樂與可循環背景音樂。當 Codex 需要離線產生音樂、快速迭代 loop 風格提示詞、驗證本機 MusicGen 環境，或用命令列方式輸出 wav 音檔時使用。
 ---
 
-# MusicGen Local
+# MusicGenLocal V0.91b
 
-Use the bundled scripts to set up a dedicated Python environment and generate `.wav` music locally with `facebook/musicgen-small`.
+使用這個 skill 時，目標是透過 `facebook/musicgen-small` 在本機生成 `.wav` 音樂，並沿用專案內已建立好的 Python 環境與腳本。
 
-## Quick Start
+## 安裝與前置
 
-1. Run `scripts/setup_venv.ps1` to create `.venv` and install dependencies.
-2. Run `scripts/generate_music.py` with either `--prompt` or `--prompt-file`.
-3. Save outputs to a temp path first while iterating.
-4. For loopable BGM, keep prompts explicit and render short tests before committing to 30 seconds.
-
-## Workflow
-
-1. Prefer 4-12 second renders while iterating on prompt wording.
-2. Use `--seconds 30` only after the prompt already produces the right texture and pacing.
-3. Keep prompts instrumental and loop-oriented:
-   `instrumental only`, `seamless loop`, `no vocals`, `no spoken words`, `no dramatic intro`, `no fade-out outro`.
-4. Write outputs as `.wav` and audition them manually; MusicGen does not guarantee mathematically perfect loop points.
-5. Save the final chosen prompt next to the output for reproducibility.
-
-## Commands
-
-Set up the environment:
+1. 專案根目錄為 `C:\Users\Admin\Desktop\俄羅斯方塊\MusicGenLocal`。
+2. 若尚未建立環境，先執行：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File C:\Users\Admin\Desktop\俄羅斯方塊\MusicGenLocal\skill\scripts\setup_venv.ps1
+powershell -ExecutionPolicy Bypass -File C:\Users\Admin\Desktop\俄羅斯方塊\MusicGenLocal\setup-musicgen-local.ps1
 ```
 
-Generate from a prompt file:
+3. 若要把 skill 安裝到 Codex，執行：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File C:\Users\Admin\Desktop\俄羅斯方塊\MusicGenLocal\install-skill.ps1
+```
+
+4. 安裝後重新啟動 Codex。
+
+## 使用方式
+
+1. 優先用 `scripts/generate_music.py` 或 `generate-bgm-local.ps1`，不要重寫生成流程。
+2. 若需求是快速測試 prompt，先生成 4 到 12 秒短片段。
+3. 若需求是遊戲背景音樂，prompt 應包含 `instrumental only`、`seamless loop`、`no vocals`、`no spoken words`、`no dramatic intro`、`no fade-out outro`。
+4. 產出後保留 `.wav`、`.prompt.txt` 與 `.json` 詳細資料，方便重現。
+5. 若使用者改要圖形介面，改用 `musicgen-local-ui`。
+
+## 常用指令
+
+建立環境：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File C:\Users\Admin\Desktop\俄羅斯方塊\MusicGenLocal\setup-musicgen-local.ps1
+```
+
+生成 8 秒測試版：
+
+```powershell
+C:\Users\Admin\Desktop\俄羅斯方塊\MusicGenLocal\generate-bgm-local.ps1 -Seconds 8 -Seed 42
+```
+
+直接指定 prompt 檔：
 
 ```powershell
 C:\Users\Admin\Desktop\俄羅斯方塊\MusicGenLocal\skill\.venv\Scripts\python.exe C:\Users\Admin\Desktop\俄羅斯方塊\MusicGenLocal\skill\scripts\generate_music.py --prompt-file C:\path\to\prompt.txt --out C:\Temp\music-loop.wav --seconds 8
 ```
 
-Generate from inline prompt text:
+## 相關檔案
 
-```powershell
-C:\Users\Admin\Desktop\俄羅斯方塊\MusicGenLocal\skill\.venv\Scripts\python.exe C:\Users\Admin\Desktop\俄羅斯方塊\MusicGenLocal\skill\scripts\generate_music.py --prompt "Retro arcade puzzle game loop, instrumental only, seamless loop, no vocals." --out C:\Temp\music-loop.wav --seconds 8
-```
+- `scripts/setup_venv.ps1`：建立 `.venv` 並安裝依賴
+- `scripts/generate_music.py`：本機生成核心 CLI
+- `references/prompting.md`：loop / 遊戲 BGM prompt 參考
 
-## Resources
-
-- `scripts/setup_venv.ps1`: create `.venv` and install required Python packages.
-- `scripts/generate_music.py`: render `.wav` music locally from text prompts.
-- `references/prompting.md`: prompt patterns for loopable game music.
-
-Read `references/prompting.md` when you need to craft or revise prompts for arcade loops, lofi loops, or other reusable game BGM.
-
+若工作重點是 GUI 啟動、參數面板、音檔庫管理或單檔 `exe`，請改用 `musicgen-local-ui`。

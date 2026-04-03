@@ -1,0 +1,4 @@
+interface:
+  display_name: "MusicGenLocal 圖形介面 V0.91b"
+  short_description: "啟動並使用 MusicGenLocal 音樂工作站"
+  default_prompt: "使用 $musicgen-local-ui 啟動 MusicGenLocal 音樂工作站 V0.91b，並以 GUI 方式生成、試聽與管理音樂。"

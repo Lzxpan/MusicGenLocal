@@ -2,3 +2,5 @@ torch
 transformers
 sentencepiece
 scipy
+PySide6
+PyInstaller

@@ -1,4 +1,4 @@
 interface:
-  display_name: "Local MusicGen"
-  short_description: "Generate local loopable game music with MusicGen"
-  default_prompt: "Use $musicgen-local to generate a loopable game background track locally with MusicGen."
+  display_name: "本機 MusicGen V0.91b"
+  short_description: "用 MusicGen 在本機生成可循環遊戲音樂"
+  default_prompt: "使用 $musicgen-local 在本機生成一段可循環的遊戲背景音樂，並保留 .prompt.txt 與 .json 詳細資料。"

@@ -1,4 +1,4 @@
-param()
+﻿param()
 
 $skillRoot = Split-Path -Parent $PSScriptRoot
 $venvPath = Join-Path $skillRoot ".venv"
@@ -11,4 +11,4 @@ if (-not (Test-Path $pythonExe)) {
 & $pythonExe -m pip install --upgrade pip
 & $pythonExe -m pip install -r (Join-Path $PSScriptRoot "requirements.txt")
 
-Write-Output "MusicGen environment ready: $pythonExe"
+Write-Output "MusicGen 本機環境已完成：$pythonExe"
