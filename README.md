@@ -232,3 +232,32 @@ powershell -ExecutionPolicy Bypass -File ...
 - 不處理自動剪輯 loop 點
 - 不直接整合進 WinForms 或 Unity
 - 不保證每次輸出完全一致的聽感，即使有 seed
+
+## 授權
+
+本專案原始碼、PowerShell 腳本、Python 腳本、skill 定義與文件，採用 `Apache License 2.0` 授權。
+
+你可以：
+
+- 免費使用
+- 免費修改
+- 免費商用
+- 重新散布
+
+但請保留：
+
+- `LICENSE`
+- `NOTICE`
+- 原始版權與出處資訊
+
+如果你要在 README、產品頁或文件中標示來源，建議使用：
+
+```text
+Based on MusicGenLocal by Lzxpan
+```
+
+補充說明：
+
+- 本專案的授權只涵蓋本 repo 內的原始碼與 skill 內容。
+- 透過模型生成的音樂成品，是否以及如何再授權，應由實際產出者自行決定。
+- `facebook/musicgen-small` 屬於第三方模型，使用時仍應另外遵守其上游模型與平台條款。
